@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binary Addition</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #a58585;
+  }
+  #binaryInput1, #binaryInput2, #addButton, #result {
+    margin-bottom: 10px;
+  }
+  .text {
+    text-align: center;
+    text-decoration: underline;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    margin: 20px 0px 10px 0px;
+  }
+  .input1, .input2 {
+    color: rgb(12, 8, 8);
+    text-align: center;
+    border:none;
+    outline: none;
+    background: none;
+    margin:10px;
+    font-size: 25px;
+  }
+  .btn {
+    text-align: center;
+    color:rgb(19, 12, 12);
+    background:none;
+    border: none;
+    font-size: 25px;
+    transition: 1s;
+  }
+  .btn:hover {
+    color:white;
+    font-size: 30px;
+  }
+  .all_input {
+    display: grid;
+    text-align: center;
+  }
+  .edit_btn {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .final {
+    text-align: center;
+    text-decoration: overline;
+    color:white;
+    margin: 5px 0px 0px 0px;
+  }
+</style>
+</head>
+<body>
+    <h1 class="text">
+        Sčítání binárních čísel
+    </h1>
+    <div class="all_input">
+        <input type="number" id="binaryInput1" placeholder= "..." class="input1">
+        <input type="number" id="binaryInput2" placeholder="..." class="input2">
+    </div>
+    <div class="edit_btn">
+        <button id="addButton" class="btn">Add</button>
+    </div>
+        <p id="result" class="final"></p>
+
+  <script>
+    function binaryAddition(binary1, binary2) {
+      let carry = 0;
+      let result = '';
+
+      let i = binary1.length - 1;
+      let j = binary2.length - 1;
+
+      while (i >= 0 || j >= 0 || carry > 0) {
+        const digit1 = i >= 0 ? parseInt(binary1[i]) : 0;
+        const digit2 = j >= 0 ? parseInt(binary2[j]) : 0;
+
+        const sum = digit1 + digit2 + carry;
+        result = (sum % 2) + result;
+        carry = sum >= 2 ? 1 : 0;
+
+        i--;
+        j--;
+      }
+
+      return result;
+    }
+
+    document.getElementById('addButton').addEventListener('click', function() {
+      const binary1 = document.getElementById('binaryInput1').value.trim();
+      const binary2 = document.getElementById('binaryInput2').value.trim();
+
+      if (/^[01]+$/.test(binary1) && /^[01]+$/.test(binary2)) {
+        const result = binaryAddition(binary1, binary2);
+        document.getElementById('result').textContent = result;
+      } else {
+        document.getElementById('result').textContent = 'chybí ti binární kod, a nebo zadej pouze 0, 1.';
+      }
+    });
+  </script>
+</body>
+</html>
